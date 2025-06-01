@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children's Day Greeting</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe6f0, #e6f0ff);
+            margin: 0;
+            flex-direction: column;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+            position: relative;
+        }
+        .animated-text {
+            font-size: 3em;
+            background: linear-gradient(90deg, #ff66b2, #ff99cc, #66b3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-style: italic;
+            animation: bounce 2s infinite, glow 3s infinite;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+        .heart {
+            font-size: 2.5em;
+            color: #ff3399;
+            margin: 15px 0;
+            animation: pulse 1.5s infinite;
+        }
+        .clickable {
+            font-size: 1.8em;
+            background: linear-gradient(90deg, #ff3399, #66b3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            animation: glow 3s infinite;
+        }
+        .surprise {
+            display: none;
+            font-size: 2em;
+            color: #ff66b2;
+            margin-top: 15px;
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
+        }
+        .author {
+            font-size: 0.9em;
+            color: #ff66b2;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+            box-shadow: 0 0 10px #fff, 0 0 20px #ff66b2;
+        }
+        .rain-text {
+            position: absolute;
+            color: #ff66b2;
+            font-size: 1.2em;
+            opacity: 0.8;
+            animation: fall 3s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 105, 180, 0.5), 0 0 10px rgba(255, 105, 180, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 20px rgba(102, 179, 255, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 5px rgba(255, 105, 180, 0.5), 0 0 10px rgba(255, 105, 180, 0.3);
+            }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="animated-text">Chúc em bé của anh 1/6 thật nhiều niềm vui nhá!</div>
+    <div class="heart">❤️</div>
+    <span class="clickable" onclick="triggerSurprise()">bấm</span>
+    <div class="surprise" id="surprise">Yay! 🎉 Cười thật tươi nhé! ❤️</div>
+    <div class="author">musk&kang</div>
+    <audio id="bgMusic" loop>
+        <source src="C:\Users\DONV1\Downloads\chucemye\1.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+    </audio>
+    <script>
+        let isPlaying = false;
+        let rainInterval = null;
+
+        function triggerSurprise() {
+            var surprise = document.getElementById("surprise");
+            var audio = document.getElementById("bgMusic");
+
+            if (surprise.style.display === "none") {
+                surprise.style.display = "block";
+                if (!isPlaying) {
+                    audio.play();
+                    isPlaying = true;
+                    startRain();
+                }
+            } else {
+                surprise.style.display = "none";
+                audio.pause();
+                isPlaying = false;
+                clearInterval(rainInterval);
+                document.querySelectorAll(".rain-text").forEach(el => el.remove());
+            }
+        }
+
+        function startRain() {
+            rainInterval = setInterval(() => {
+                let rainText = document.createElement("div");
+                rainText.className = "rain-text";
+                rainText.innerText = "Anh yêu em ❤️";
+                rainText.style.left = Math.random() * 100 + "vw";
+                rainText.style.animationDuration = Math.random() * 2 + 2 + "s";
+                document.body.appendChild(rainText);
+
+                setTimeout(() => {
+                    rainText.remove();
+                }, 5000);
+            }, 200);
+        }
+
+        for (let i = 0; i < 20; i++) {
+            let sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDelay = Math.random() * 2 + "s";
+            document.body.appendChild(sparkle);
+        }
+    </script>
+</body>
+</html>
